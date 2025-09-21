@@ -1,38 +1,32 @@
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
+import { counterActions } from "../store/Counter";
+import { privacyActions } from "../store/Privacy";
 
 const Controls = () => {
   const dispatch = useDispatch();
 
   const inputElement = useRef("");
 
-  const handleIncreament = () => {
-    dispatch({ type: "INCREAMENT" });
+  const handleIncrement = () => {
+    dispatch(counterActions.increment());
   };
 
-  const handleDecreament = () => {
-    dispatch({ type: "DREAMENT" });
+  const handleDecrement = () => {
+    dispatch(counterActions.decrement());
   };
 
   const handleAdd = () => {
-    dispatch({
-      type: "ADD",
-      payload: { num: Number(inputElement.current.value) },
-    });
+    dispatch(counterActions.add({ num: Number(inputElement.current.value) }));
     inputElement.current.value = "";
   };
 
   const handleSubtract = () => {
-    dispatch({
-      type: "SUBTRACT",
-      payload: { num: Number(inputElement.current.value) },
-    });
+    dispatch(counterActions.subtract(Number(inputElement.current.value)));
     inputElement.current.value = "";
   };
   const handlePrivacy = () => {
-    dispatch({
-      type: "PRIVACY_TOGGLE",
-    });
+    dispatch(privacyActions.toggle());
   };
 
   return (
@@ -41,18 +35,22 @@ const Controls = () => {
         <button
           type="button"
           className="btn btn-primary"
-          onClick={handleIncreament}
+          onClick={handleIncrement}
         >
-          Increament by 1
+          Increment by 1
         </button>
         <button
           type="button"
           className="btn btn-success"
-          onClick={handleDecreament}
+          onClick={handleDecrement}
         >
-          Decreament by 1
+          Decrement by 1
         </button>
-        <button type="button" class="btn btn-warning" onClick={handlePrivacy}>
+        <button
+          type="button"
+          className="btn btn-warning"
+          onClick={handlePrivacy}
+        >
           Privacy
         </button>
       </div>
